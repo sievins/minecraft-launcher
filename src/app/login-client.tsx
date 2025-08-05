@@ -1,0 +1,44 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+export default function LoginClient() {
+  const sp = useSearchParams();
+  const err = sp.get("e");
+  const [pw, setPw] = useState("");
+
+  return (
+    <form
+      method="POST"
+      action="/api/login"
+      className="w-full max-w-sm space-y-4"
+    >
+      <h2 className="text-lg font-semibold">Enter password</h2>
+
+      {err && (
+        <p className="rounded bg-red-50 p-2 text-sm text-red-700">
+          Incorrect password. Please try again.
+        </p>
+      )}
+
+      <input
+        type="password"
+        name="password"
+        required
+        className="w-full rounded border p-2"
+        placeholder="Password"
+        value={pw}
+        onChange={(e) => setPw(e.target.value)}
+        autoComplete="current-password"
+      />
+
+      <button
+        type="submit"
+        className="cursor-pointer w-full rounded bg-blue-600 px-4 py-2 font-medium text-white"
+      >
+        Sign in
+      </button>
+    </form>
+  );
+}
